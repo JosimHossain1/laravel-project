@@ -33,14 +33,40 @@
             </a>
         </div>
 
-        {{-- Action --}}
-        <a href="{{ route('products.create') }}"
-           class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 sm:px-4">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-            </svg>
-            <span class="hidden sm:inline">New product</span>
-            <span class="sr-only sm:hidden">New product</span>
-        </a>
+         {{-- Action --}}
+        @auth
+            <div class="flex items-center gap-2">
+                <a href="{{ route('products.create') }}"
+                   class="hidden items-center gap-2 rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 sm:inline-flex">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    New product
+                </a>
+
+                <span class="hidden max-w-32 truncate text-sm font-medium text-slate-600 sm:inline">
+                    {{ auth()->user()->name }}
+                </span>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                            class="rounded-lg px-2.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:px-3">
+                        Log out
+                    </button>
+                </form>
+            </div>
+        @else
+            <div class="flex items-center gap-2">
+                <a href="{{ route('login') }}"
+                   class="rounded-lg px-2.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 sm:px-3">
+                    Log in
+                </a>
+                <a href="{{ route('register') }}"
+                   class="rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 sm:px-4">
+                    Register
+                </a>
+            </div>
+        @endauth
     </nav>
 </header>
