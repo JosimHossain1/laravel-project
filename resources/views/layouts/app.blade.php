@@ -50,7 +50,7 @@
         <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-6 text-sm text-slate-500 sm:flex-row">
             <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}</p>
             <div class="flex items-center gap-5">
-                <a href="/" class="transition hover:text-slate-900">Home</a>
+                <a href="{{ route('home') }}" class="transition hover:text-slate-900">Home</a>
                 <a href="{{ route('products.index') }}" class="transition hover:text-slate-900">Products</a>
             </div>
         </div>

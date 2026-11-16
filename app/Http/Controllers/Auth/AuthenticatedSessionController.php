@@ -11,31 +11,31 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     // Login user
-    public function create():View
+    public function create(): View
     {
         return view('auth.login');
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
-         $credentials = $request->validate([
-            'email'=>['required', 'string', 'email'],
-            'password'=>['required', 'string'],
-         ]);
+        $credentials = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
-         if (! Auth::attempt($credentials, $request->boolean('remember') ))
-            {
-                return back()
+        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
+            return back()
                 ->withErrors([
-                    'email'=>'The provided credentials do not match our records.',
+                    'email' => 'The provided credentials do not match our records.',
                 ])
                 ->onlyInput('email');
-            }
+        }
 
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard'));
     }
-    
+
     // Logout user
     public function destroy(Request $request): RedirectResponse
     {
@@ -44,6 +44,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }
